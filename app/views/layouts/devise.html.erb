@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title><%= content_for(:title) || "Safe Pass App" %></title>
+    <title>SafePassApp Secure Authentication</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -27,8 +27,24 @@
   </head>
 
   <body>
-    <%# = render partial: 'shared/flash' %>
-    <%= render partial: 'shared/navbar' %>
-    <div class="container"><%= yield %></div>
+    <div class="vh-100">
+      <div
+        class="
+          h-100 container d-flex flex-column justify-content-center
+          align-items-center
+        "
+      >
+        <%= link_to root_path, class: 'navbar-brand' do %>
+          <h2>
+            <i class="bi bi-safe-fill me-2"></i>
+            SafePass
+          </h2>
+        <% end %>
+
+        <div class="card card--auth shadow-sm w-100">
+          <div class="card-body"><%= yield %></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

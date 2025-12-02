@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <%= link_to "SafePass", root_path, class: "navbar-brand fw-bold" %>
+    <%= link_to root_path, class: "navbar-brand fw-bold"  do %>
+      <i class="bi bi-safe-fill me-2"></i>
+      SafePass
+    <% end %>
 
     <button
       class="navbar-toggler"
@@ -15,13 +18,23 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <%= link_to "Dashboard", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
         </li>
 
         <li class="nav-item">
           <%= link_to "About", about_path, class: "nav-link" %>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to "Sign In", new_user_session_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
         </li>
       </ul>
     </div>
