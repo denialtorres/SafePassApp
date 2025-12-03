@@ -5,7 +5,9 @@
         <nav class="nav flex-column"><%= render @entries %></nav>
       </div>
 
-      <div class="entries-card__main"><%= @entries.first.name %></div>
+      <div class="entries-card__main">
+        <%= render(partial: "entries/main", locals: { entry: @main_entry }) %>
+      </div>
     </div>
   </div>
 </div>
