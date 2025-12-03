@@ -1,28 +1,55 @@
 class EntriesController < ApplicationController
   before_action :authenticate_user!
-
+  before_action :set_entry, only: %i[show edit update destroy]
 
   def index
-    @entries = current_user.entries
+    @entries = current_user.entries.order(:name)
+    @main_entry = current_user.entries.order(:name).first
   end
 
   def new
     @entry = Entry.new
   end
 
+
+  def edit
+  end
+
+  def update
+    if @entry.update(entry_params)
+      flash.now[:notice] = "#{@entry.name} has been updated.".html_safe
+      respond_to do |format|
+        format.html { redirect_to @entry }
+        format.turbo_stream { }
+      end
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def show
-    @entry = current_user.entries.find(params[:id])
   end
 
   def create
     @entry = current_user.entries.new(entry_params)
 
     if @entry.save
-      flash[:notice] = "Entry has been saved!"
-      redirect_to root_path
+      flash.now[:notice] = "<strong>#{@entry.name}</strong> Entry has been saved!".html_safe
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { }
+      end
     else
-      flash[:alert] = "Sorry, there was an issue"
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @entry.destroy
+    flash.now[:notice] = "#{@entry.name} has been deleted."
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.turbo_stream { }
     end
   end
 
@@ -30,5 +57,9 @@ class EntriesController < ApplicationController
 
   def entry_params
     params.expect(entry: [ :name, :url, :username, :password ])
+  end
+
+  def set_entry
+    @entry = current_user.entries.find(params[:id])
   end
 end
