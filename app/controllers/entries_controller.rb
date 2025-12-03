@@ -10,6 +10,10 @@ class EntriesController < ApplicationController
     @entry = Entry.new
   end
 
+  def show
+    @entry = current_user.entries.find(params[:id])
+  end
+
   def create
     @entry = current_user.entries.new(entry_params)
 
