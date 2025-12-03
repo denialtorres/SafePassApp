@@ -1,7 +1,6 @@
 class EntriesController < ApplicationController
   before_action :authenticate_user!
 
-
   def index
     @entries = current_user.entries
     @main_entry = current_user.entries.first
@@ -20,7 +19,10 @@ class EntriesController < ApplicationController
 
     if @entry.save
       flash[:notice] = "Entry has been saved!"
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { }
+      end
     else
       flash[:alert] = "Sorry, there was an issue"
       render :new, status: :unprocessable_entity
